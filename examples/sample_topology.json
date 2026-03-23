@@ -1,0 +1,105 @@
+{
+  "routers": [
+    {
+      "id": "R1",
+      "interfaces": [
+        {
+          "name": "lan1",
+          "ip_address": "192.168.1.1",
+          "network": "192.168.1.0/24"
+        },
+        {
+          "name": "r1-r2",
+          "ip_address": "10.0.12.1",
+          "network": "10.0.12.0/30"
+        }
+      ],
+      "routes": [
+        {
+          "network": "10.0.2.0/24",
+          "next_hop": "10.0.12.2",
+          "interface": "r1-r2",
+          "metric": 1
+        },
+        {
+          "network": "0.0.0.0/0",
+          "next_hop": "10.0.12.2",
+          "interface": "r1-r2",
+          "metric": 10
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "interfaces": [
+        {
+          "name": "r2-r1",
+          "ip_address": "10.0.12.2",
+          "network": "10.0.12.0/30"
+        },
+        {
+          "name": "r2-r3",
+          "ip_address": "10.0.23.1",
+          "network": "10.0.23.0/30"
+        }
+      ],
+      "routes": [
+        {
+          "network": "192.168.1.0/24",
+          "next_hop": "10.0.12.1",
+          "interface": "r2-r1",
+          "metric": 1
+        },
+        {
+          "network": "10.0.2.0/24",
+          "next_hop": "10.0.23.2",
+          "interface": "r2-r3",
+          "metric": 1
+        },
+        {
+          "network": "0.0.0.0/0",
+          "next_hop": "10.0.23.2",
+          "interface": "r2-r3",
+          "metric": 10
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "interfaces": [
+        {
+          "name": "r3-r2",
+          "ip_address": "10.0.23.2",
+          "network": "10.0.23.0/30"
+        },
+        {
+          "name": "lan3",
+          "ip_address": "10.0.2.1",
+          "network": "10.0.2.0/24"
+        }
+      ],
+      "routes": [
+        {
+          "network": "192.168.1.0/24",
+          "next_hop": "10.0.23.1",
+          "interface": "r3-r2",
+          "metric": 1
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "router_a": "R1",
+      "iface_a": "r1-r2",
+      "router_b": "R2",
+      "iface_b": "r2-r1"
+    },
+    {
+      "router_a": "R2",
+      "iface_a": "r2-r3",
+      "router_b": "R3",
+      "iface_b": "r3-r2"
+    }
+  ]
+}
